@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quang Hà & Lan Thanh – Player</title>
+  <title>Tôi & Bạn – Player</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -189,8 +189,8 @@
     <canvas id="petals" aria-hidden="true"></canvas>
 
     <header class="wedding-header">
-      <p style="font-family: 'Playfair Display', serif;">Chào mừng đến với đám cưới</p>
-      <h1>QUANG HÀ <span>và</span> LAN THANH</h1>
+      <p style="font-family: 'Playfair Display', serif;">Bản quyền thuộc về DQH</p>
+      <h1>TÔI <span>và</span> BẠN</h1>
     </header>
 
     <main class="vinyl-section">
@@ -363,7 +363,7 @@
       ;['dragenter','dragover'].forEach(ev=> dropzone.addEventListener(ev, (e)=>{ e.preventDefault(); e.stopPropagation(); dropzone.classList.add('drag'); }));
       ;['dragleave','drop'].forEach(ev=> dropzone.addEventListener(ev, (e)=>{ e.preventDefault(); e.stopPropagation(); dropzone.classList.remove('drag'); }));
       dropzone.addEventListener('drop', (e)=>{ const files = filesFromDataTransfer(e.dataTransfer); if (files.length) loadFileList(files); });
-      function updateMediaSession(){ if ('mediaSession' in navigator){ navigator.mediaSession.metadata = new MediaMetadata({ title: titleEl.textContent || 'Đang phát', artist: 'Đặng Quang Hà & Bảo Uyên Wedding', album: 'Playlist', }); } }
+      function updateMediaSession(){ if ('mediaSession' in navigator){ navigator.mediaSession.metadata = new MediaMetadata({ title: titleEl.textContent || 'Đang phát', artist: 'Tôi & Bạn', album: 'Playlist', }); } }
       if ('mediaSession' in navigator){ navigator.mediaSession.setActionHandler('play',  ()=> audio.play()); navigator.mediaSession.setActionHandler('pause', ()=> audio.pause()); navigator.mediaSession.setActionHandler('previoustrack', prevTrack); navigator.mediaSession.setActionHandler('nexttrack',     nextTrack); navigator.mediaSession.setActionHandler('seekbackward',  (d)=> audio.currentTime = Math.max(0, audio.currentTime - (d?.seekOffset||10))); navigator.mediaSession.setActionHandler('seekforward',   (d)=> audio.currentTime = Math.min(audio.duration||Infinity, audio.currentTime + (d?.seekOffset||10))); }
       function updateSliderA11y(pct, ct, du){ progressContainer.setAttribute('aria-valuenow', String(Math.round(pct*100))); progressContainer.setAttribute('aria-valuetext', `${fmt(ct)} trên ${fmt(du)}`); }
 
