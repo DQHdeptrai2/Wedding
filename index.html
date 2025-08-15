@@ -16,25 +16,78 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
+    /* === CÀI ĐẶT CHẾ ĐỘ SÁNG (MẶC ĐỊNH) === */
     :root{
       --bg-color:#FCEAE6; --text-color:#6B352F; --progress-color:#BF4C41; --progress-bg:#EAD1CC; --vinyl-color:#232323; --vol-pct:80%;
       --card-radius:40px; --soft-shadow:0 15px 40px rgba(0,0,0,.2);
+      --body-bg: #e6e6e6;
+      --btn-hover-bg: rgba(0,0,0,.05);
+      --btn-extra-bg: rgba(0,0,0,.05);
+      --btn-toggle-active-bg: rgba(0,0,0,.1);
+      --btn-toggle-active-color: var(--progress-color);
+      --file-btn-bg: #fff;
+      --file-btn-hover-bg: #fff7f6;
+      --file-btn-border: #d9b8b2;
+      --dropzone-border: #d9b8b2;
+      --dropzone-text: #8f6b65;
+      --dropzone-drag-bg: #fff7f6;
+      --playlist-border: #d9b8b2;
+      --pl-header-color: #8f6b65;
+      --pl-item-bg: #ffffffbb;
+      --pl-item-border: #efd6d1;
+      --pl-item-hover-bg: #fff;
+      --pl-item-active-outline: #BF4C41;
+      --label-border: #d4d4d4;
     }
+
+    /* === CÀI ĐẶT CHẾ ĐỘ TỐI (KHI CÓ CLASS 'dark-mode') === */
+    body.dark-mode {
+      --bg-color: #2C272C; /* Nền card đậm */
+      --text-color: #EAE3EA; /* Chữ sáng */
+      --progress-color: #FF7B9C; /* Màu progress hồng sáng */
+      --progress-bg: #4A444A; /* Nền progress tối */
+      --vinyl-color: #1a1a1a;
+      --body-bg: #121212; /* Nền body rất tối */
+      --soft-shadow: 0 15px 40px rgba(0,0,0,.5);
+      --btn-hover-bg: rgba(255,255,255,.08);
+      --btn-extra-bg: rgba(255,255,255,.08);
+      --btn-toggle-active-bg: rgba(255, 123, 156, .2);
+      --btn-toggle-active-color: #FF7B9C;
+      --file-btn-bg: #3D383D;
+      --file-btn-hover-bg: #4A444A;
+      --file-btn-border: #5A545A;
+      --dropzone-border: #5A545A;
+      --dropzone-text: #B0A8B0;
+      --dropzone-drag-bg: #4A444A;
+      --playlist-border: #5A545A;
+      --pl-header-color: #B0A8B0;
+      --pl-item-bg: rgba(74, 68, 74, 0.85);
+      --pl-item-border: #5A545A;
+      --pl-item-hover-bg: #4A444A;
+      --pl-item-active-outline: #FF7B9C;
+      --label-border: #555;
+    }
+
     *{margin:0;padding:0;box-sizing:border-box}
-    body{display:flex;justify-content:center;align-items:center;min-height:100vh;background:#e6e6e6;font-family:'Montserrat',sans-serif;color:var(--text-color);padding:12px}
+    body{display:flex;justify-content:center;align-items:center;min-height:100vh;background:var(--body-bg);font-family:'Montserrat',sans-serif;color:var(--text-color);padding:12px; transition: background-color 0.3s ease;}
 
-    .player-container{width:min(100vw - 24px, 540px);background:var(--bg-color);border-radius:var(--card-radius);box-shadow:var(--soft-shadow);padding:26px 22px;display:flex;flex-direction:column;overflow:hidden;position:relative}
+    .player-container{width:min(100vw - 24px, 540px);background:var(--bg-color);border-radius:var(--card-radius);box-shadow:var(--soft-shadow);padding:26px 22px;display:flex;flex-direction:column;overflow:hidden;position:relative; transition: background-color 0.3s ease, box-shadow 0.3s ease;}
 
-    /* --- CSS CHO HIỆU ỨNG NỀN --- */
-    #petals {
+    /* --- CSS CHO NÚT CHUYỂN GIAO DIỆN --- */
+    .theme-toggle {
       position: absolute;
-      inset: 0;
+      top: 20px;
+      right: 20px;
+      z-index: 10;
+      width: 40px;
+      height: 40px;
+      background-color: var(--btn-extra-bg);
+      font-size: 16px;
     }
-    .wedding-header, .vinyl-section, .controls-section {
-      position: relative;
-      z-index: 2; /* Đảm bảo nội dung nổi lên trên nền */
-    }
-    /* ------------------------------ */
+    /* ------------------------------------ */
+
+    #petals { position: absolute; inset: 0; }
+    .wedding-header, .vinyl-section, .controls-section { position: relative; z-index: 2; }
 
     .wedding-header{text-align:center;margin-top:4px;flex-shrink:0}
     .wedding-header p{font-size:12px;letter-spacing:2px;font-weight:600;margin-bottom:8px;text-transform:uppercase;opacity:.8}
@@ -58,7 +111,7 @@
     .vinyl-record.playing{animation-play-state:running}
     @keyframes rotate{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 
-    .label{width:100px;height:100px;background-image:url('https://cdn.pixabay.com/photo/2016/05/27/22/25/roses-1420719_1280.jpg');background-size:cover;background-position:center;border-radius:50%;border:3px solid #d4d4d4;box-shadow:inset 0 0 0 2px rgba(0,0,0,.15)}
+    .label{width:100px;height:100px;background-image:url('https://cdn.pixabay.com/photo/2016/05/27/22/25/roses-1420719_1280.jpg');background-size:cover;background-position:center;border-radius:50%;border:3px solid var(--label-border);box-shadow:inset 0 0 0 2px rgba(0,0,0,.15)}
     .label-ring{position:absolute;width:132px;height:132px;border-radius:50%;box-shadow:inset 0 0 0 2px rgba(255,255,255,.75), inset 0 0 0 6px rgba(0,0,0,.15)}
     .label-hole{position:absolute;width:10px;height:10px;background:var(--bg-color);border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%);z-index:10}
 
@@ -89,43 +142,50 @@
     .progress-container{width:100%;padding:8px 0;cursor:pointer; -webkit-tap-highlight-color: transparent;}
     .progress-bar{width:100%;height:6px;background:var(--progress-bg);border-radius:3px}
     .progress{width:0%;height:100%;background:var(--progress-color);border-radius:3px;position:relative;transition:width .1s linear}
-    /* === THAY ĐỔI 1: THÊM CSS MỚI === */
     .progress.scrubbing { transition: none; }
-    .progress::after{content:'';position:absolute;right:-6px;top:50%;transform:translateY(-50%);width:12px;height:12px;background:var(--progress-color);border-radius:50%;box-shadow:0 0 6px rgba(191,76,65,.5)}
+    .progress::after{content:'';position:absolute;right:-6px;top:50%;transform:translateY(-50%);width:12px;height:12px;background:var(--progress-color);border-radius:50%;box-shadow:0 0 6px color-mix(in srgb, var(--progress-color) 50%, transparent)}
+    
     .buttons-container{display:flex;justify-content:center;align-items:center;margin-top:10px; gap: 15px;}
     .btn-control{border:none;background:none;color:var(--text-color);font-size:18px;cursor:pointer;width:44px;height:44px;border-radius:50%;display:flex;justify-content:center;align-items:center;transition:background-color .2s, color .2s}
-    .btn-control:hover{background:rgba(0,0,0,.05)}
+    .btn-control:hover{background:var(--btn-hover-bg)}
     .btn-play{font-size:36px; width: 54px; height: 54px;}
-    .btn-extra{background:rgba(0,0,0,.05);font-size:16px}
-    .btn-toggle-active{background:rgba(0,0,0,.1); color: var(--progress-color);}
+    .btn-extra{background:var(--btn-extra-bg)}
+    .btn-toggle-active{background:var(--btn-toggle-active-bg); color: var(--btn-toggle-active-color);}
+    
     .volume-row{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;margin-top:10px}
     .volume-row .btn-control{width:40px;height:40px}
     .vol-range{appearance:none;-webkit-appearance:none;width:100%;height:6px;border-radius:4px;background:linear-gradient(90deg,var(--progress-color) 0%, var(--progress-color) var(--vol-pct), var(--progress-bg) var(--vol-pct));outline:none}
-    .vol-range::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--progress-color);cursor:pointer;box-shadow:0 0 5px rgba(191,76,65,.5)}
+    .vol-range::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--progress-color);cursor:pointer;box-shadow:0 0 5px color-mix(in srgb, var(--progress-color) 50%, transparent)}
     .vol-range::-moz-range-thumb{width:18px;height:18px;border:none;border-radius:50%;background:var(--progress-color);cursor:pointer}
     .vol-range::-moz-range-progress{background:var(--progress-color);height:6px;border-radius:4px}
     .vol-range::-moz-range-track{background:var(--progress-bg);height:6px;border-radius:4px}
     .vol-label{min-width:40px;text-align:right;font-variant-numeric:tabular-nums}
+    
     .picker{display:flex;gap:10px;align-items:center;margin-top:12px}
-    .file-btn{display:inline-flex;gap:8px;align-items:center;padding:10px 14px;border-radius:12px;background:#fff;color:var(--text-color);border:1px solid #d9b8b2;cursor:pointer;font-size:14px}
-    .file-btn:hover{background:#fff7f6}
+    .file-btn{display:inline-flex;gap:8px;align-items:center;padding:10px 14px;border-radius:12px;background:var(--file-btn-bg);color:var(--text-color);border:1px solid var(--file-btn-border);cursor:pointer;font-size:14px; transition: background-color .2s;}
+    .file-btn:hover{background:var(--file-btn-hover-bg)}
     #file-input{display:none}
-    .dropzone{margin-top:8px;border:1px dashed #d9b8b2;border-radius:12px;padding:10px 12px;font-size:12px;text-align:center;color:#8f6b65}
-    .dropzone.drag{background:#fff7f6}
-    .playlist{ max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.4s ease, padding-top 0.4s ease, border-top-width 0.4s ease; margin-top: 0; padding-top: 0; border-top: 0px dashed #d9b8b2; }
+    .dropzone{margin-top:8px;border:1px dashed var(--dropzone-border);border-radius:12px;padding:10px 12px;font-size:12px;text-align:center;color:var(--dropzone-text)}
+    .dropzone.drag{background:var(--dropzone-drag-bg)}
+    
+    .playlist{ max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.4s ease, padding-top 0.4s ease, border-top-width 0.4s ease; margin-top: 0; padding-top: 0; border-top: 0px dashed var(--playlist-border); }
     .player-container.playlist-visible .playlist { max-height: 240px; opacity: 1; margin-top: 14px; padding-top: 10px; border-top-width: 1px; overflow: auto; -webkit-overflow-scrolling: touch; }
-    .pl-header{font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;color:#8f6b65}
+    .pl-header{font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;color:var(--pl-header-color)}
     .pl-list{list-style:none;display:flex;flex-direction:column;gap:6px}
-    .pl-item{display:grid;grid-template-columns:20px 1fr auto;gap:8px;align-items:center;padding:8px;border-radius:10px;background:#ffffffbb;border:1px solid #efd6d1;cursor:pointer}
-    .pl-item:hover{background:#fff}
-    .pl-item.active{outline:2px solid #BF4C41}
-    .pl-time{font-variant-numeric:tabular-nums;font-size:12px;color:#8f6b65}
+    .pl-item{display:grid;grid-template-columns:20px 1fr auto;gap:8px;align-items:center;padding:8px;border-radius:10px;background:var(--pl-item-bg);border:1px solid var(--pl-item-border);cursor:pointer; transition: background-color .2s;}
+    .pl-item:hover{background:var(--pl-item-hover-bg)}
+    .pl-item.active{outline:2px solid var(--pl-item-active-outline)}
+    .pl-time{font-variant-numeric:tabular-nums;font-size:12px;color:var(--pl-header-color)}
     @media (prefers-reduced-motion: reduce){.vinyl-record, .tonearm {animation:none; transition: none;}}
   </style>
 </head>
 <body>
   <div class="player-container">
-    <!-- THẺ CANVAS CHO HIỆU ỨNG NỀN -->
+    <!-- NÚT CHUYỂN CHẾ ĐỘ SÁNG/TỐI -->
+    <button id="theme-toggle-btn" class="btn-control theme-toggle" title="Chuyển chế độ Sáng/Tối" aria-label="Chuyển đổi chế độ Sáng Tối">
+      <i class="fas fa-moon"></i>
+    </button>
+    
     <canvas id="petals" aria-hidden="true"></canvas>
 
     <header class="wedding-header">
@@ -196,6 +256,7 @@
       // --- JAVASCRIPT CHO HIỆU ỨNG NỀN ---
       (function(){
         const c = document.querySelector('#petals'); const ctx = c.getContext('2d'); let w, h, dpr;
+        
         function resize(){ 
           dpr = devicePixelRatio || 1; 
           const container = c.parentElement;
@@ -213,15 +274,25 @@
         }
         function drawPetal(p){
           const s = p.s; ctx.save(); ctx.globalAlpha = p.o; ctx.translate(p.x, p.y); ctx.rotate(p.r);
+          
+          // === THAY ĐỔI: Thêm hiệu ứng phát sáng nếu body có class 'dark-mode' ===
+          if (document.body.classList.contains('dark-mode')) {
+            ctx.shadowColor = '#FF7B9C'; // Màu phát sáng
+            ctx.shadowBlur = 15; // Độ mờ của vùng sáng
+          }
+          
           const g = ctx.createLinearGradient(-s, -s, s, s); g.addColorStop(0,'#ff6b8b'); g.addColorStop(1,'#ffd1db'); ctx.fillStyle=g;
           ctx.beginPath(); ctx.moveTo(0, -s*.8); ctx.bezierCurveTo(s*.9, -s*.2, s*.8, s*.6, 0, s);
-          ctx.bezierCurveTo(-s*.8, s*.6, -s*.9, -s*.2, 0, -s*.8); ctx.closePath(); ctx.fill(); ctx.restore();
+          ctx.bezierCurveTo(-s*.8, s*.6, -s*.9, -s*.2, 0, -s*.8); ctx.closePath(); ctx.fill(); 
+          
+          ctx.restore();
         }
         function step(){ ctx.clearRect(0,0,w,h); parts.forEach(p=>{ p.y += p.v * dpr; p.x += Math.sin(p.y*0.002)*0.6*dpr; p.r += 0.002; if(p.y > h+40) Object.assign(p, newPetal(), {y:-20}) ; drawPetal(p); }); requestAnimationFrame(step); }
         step();
       })();
       // ------------------------------------
 
+      // --- CÁC BIẾN DOM CỦA TRÌNH PHÁT NHẠC ---
       const playerContainer = document.querySelector('.player-container');
       const audio = document.getElementById('audio-source');
       const playBtn = document.getElementById('play-pause-btn');
@@ -244,11 +315,23 @@
       const fileInput = document.getElementById('file-input');
       const dropzone = document.getElementById('dropzone');
       const plEl = document.getElementById('playlist-list');
+      
+      // --- THÊM BIẾN DOM CHO NÚT CHUYỂN GIAO DIỆN ---
+      const themeToggleBtn = document.getElementById('theme-toggle-btn');
+      const themeIcon = themeToggleBtn.querySelector('i');
+      const body = document.body;
 
+      // === CÁC BIẾN TRẠNG THÁI ===
       let objectUrls = []; let isPlaying = false; let scrubbing = false; let wasPlayingBeforeScrub = false; let shuffle = false; const playlist = []; let currentIndex = -1;
+      
+      // === CÁC HÀM TIỆN ÍCH VÀ HÀM CHÍNH CỦA TRÌNH PHÁT ===
       const fmt = (s)=>{ if(isNaN(s)) return '—:—'; const m=Math.floor(s/60), ss=Math.floor(s%60); return String(m).padStart(2,'0')+':'+String(ss).padStart(2,'0'); };
       function toggle(){ isPlaying ? audio.pause() : playUser(); }
       async function playUser(){ try{ await audio.play(); }catch(e){ /* silent fail */ } }
+      const save = (k,v)=>{ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} }; 
+      const load = (k, def)=>{ try{ const v = localStorage.getItem(k); return v===null?def:JSON.parse(v); }catch{ return def; } };
+      
+      // === CÁC HÀM LOGIC CỦA TRÌNH PHÁT (GIỮ NGUYÊN) ===
       audio.addEventListener('play', ()=>{ isPlaying = true; playIcon.classList.replace('fa-play','fa-pause'); vinyl.classList.add('playing'); tonearm.classList.add('tonearm-active'); });
       audio.addEventListener('pause', ()=>{ isPlaying = false; playIcon.classList.replace('fa-pause','fa-play'); vinyl.classList.remove('playing'); tonearm.classList.remove('tonearm-active'); });
       audio.addEventListener('loadedmetadata', ()=>{ totalDurationEl.textContent = fmt(audio.duration); updateSliderA11y((audio.currentTime||0)/(audio.duration||1), audio.currentTime||0, audio.duration||0); });
@@ -266,31 +349,9 @@
       prevBtn.addEventListener('click', prevTrack); nextBtn.addEventListener('click', nextTrack); playBtn.addEventListener('click', toggle);
       playlistBtn.addEventListener('click', ()=>{ playerContainer.classList.toggle('playlist-visible'); const open = playerContainer.classList.contains('playlist-visible'); playlistBtn.classList.toggle('btn-toggle-active', open); playlistBtn.setAttribute('aria-pressed', String(open)); playlistBtn.setAttribute('aria-expanded', String(open)); save('plopen', open); });
       const seekAt = (clientX) => { const rect = progressContainer.getBoundingClientRect(); const du = audio.duration || 0; if (!du) return; const x = Math.min(Math.max(clientX - rect.left, 0), rect.width); const p = x / rect.width; audio.currentTime = p * du; progress.style.width = (p*100).toFixed(4) + '%'; updateSliderA11y(p, audio.currentTime, du); };
-      
-      // === THAY ĐỔI 2: CẬP NHẬT JAVASCRIPT ===
-      progressContainer.addEventListener('pointerdown', (e)=>{ 
-        if (!audio.duration) return;
-        progress.classList.add('scrubbing'); // Thêm class khi bắt đầu kéo
-        scrubbing = true;
-        wasPlayingBeforeScrub = !audio.paused;
-        if(wasPlayingBeforeScrub) audio.pause();
-        progressContainer.setPointerCapture(e.pointerId);
-        seekAt(e.clientX);
-      });
-      window.addEventListener('pointermove', (e)=>{ 
-        if (scrubbing) seekAt(e.clientX);
-      });
-      window.addEventListener('pointerup', (e)=>{ 
-        if (!scrubbing) return;
-        progress.classList.remove('scrubbing'); // Gỡ class khi thả tay
-        if (progressContainer.hasPointerCapture(e.pointerId)) {
-          progressContainer.releasePointerCapture(e.pointerId);
-        }
-        scrubbing = false;
-        if (wasPlayingBeforeScrub) { playUser(); }
-      });
-      // === KẾT THÚC THAY ĐỔI ===
-
+      progressContainer.addEventListener('pointerdown', (e)=>{ if (!audio.duration) return; progress.classList.add('scrubbing'); scrubbing = true; wasPlayingBeforeScrub = !audio.paused; if(wasPlayingBeforeScrub) audio.pause(); progressContainer.setPointerCapture(e.pointerId); seekAt(e.clientX); });
+      window.addEventListener('pointermove', (e)=>{ if (scrubbing) seekAt(e.clientX); });
+      window.addEventListener('pointerup', (e)=>{ if (!scrubbing) return; progress.classList.remove('scrubbing'); if (progressContainer.hasPointerCapture(e.pointerId)) { progressContainer.releasePointerCapture(e.pointerId); } scrubbing = false; if (wasPlayingBeforeScrub) { playUser(); } });
       document.addEventListener('keydown', (e)=>{ const t = e.target; const tag = t && t.tagName ? t.tagName.toLowerCase() : ''; if (tag === 'input' || tag === 'textarea' || (t && t.isContentEditable)) return; if (e.code==='Space'){ e.preventDefault(); toggle(); } else if (e.code==='ArrowRight') audio.currentTime = Math.min((audio.currentTime||0)+5, audio.duration||Infinity); else if (e.code==='ArrowLeft')  audio.currentTime = Math.max((audio.currentTime||0)-5, 0); });
       progressContainer.addEventListener('keydown', (e)=>{ if (!audio.duration) return; if (e.code==='ArrowRight'){ e.preventDefault(); audio.currentTime = Math.min(audio.currentTime + 5, audio.duration); } else if (e.code==='ArrowLeft'){ e.preventDefault(); audio.currentTime = Math.max(audio.currentTime - 5, 0); } else if (e.code==='Home'){ e.preventDefault(); audio.currentTime = 0; } else if (e.code==='End'){ e.preventDefault(); audio.currentTime = audio.duration; } else if (e.code==='PageUp'){ e.preventDefault(); audio.currentTime = Math.min(audio.currentTime + 10, audio.duration); } else if (e.code==='PageDown'){ e.preventDefault(); audio.currentTime = Math.max(audio.currentTime - 10, 0); } });
       function updateVolUI(){ const pct = Math.round((audio.muted?0:audio.volume)*100); volLabel.textContent = pct + '%'; document.documentElement.style.setProperty('--vol-pct', pct + '%'); volIcon.className = (audio.muted||pct===0)?'fa-solid fa-volume-xmark':(pct<40?'fa-solid fa-volume-low':'fa-solid fa-volume-high'); muteBtn.setAttribute('aria-pressed', String(audio.muted)); }
@@ -305,11 +366,45 @@
       function updateMediaSession(){ if ('mediaSession' in navigator){ navigator.mediaSession.metadata = new MediaMetadata({ title: titleEl.textContent || 'Đang phát', artist: 'Đặng Quang Hà & Bảo Uyên Wedding', album: 'Playlist', }); } }
       if ('mediaSession' in navigator){ navigator.mediaSession.setActionHandler('play',  ()=> audio.play()); navigator.mediaSession.setActionHandler('pause', ()=> audio.pause()); navigator.mediaSession.setActionHandler('previoustrack', prevTrack); navigator.mediaSession.setActionHandler('nexttrack',     nextTrack); navigator.mediaSession.setActionHandler('seekbackward',  (d)=> audio.currentTime = Math.max(0, audio.currentTime - (d?.seekOffset||10))); navigator.mediaSession.setActionHandler('seekforward',   (d)=> audio.currentTime = Math.min(audio.duration||Infinity, audio.currentTime + (d?.seekOffset||10))); }
       function updateSliderA11y(pct, ct, du){ progressContainer.setAttribute('aria-valuenow', String(Math.round(pct*100))); progressContainer.setAttribute('aria-valuetext', `${fmt(ct)} trên ${fmt(du)}`); }
-      const save = (k,v)=>{ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} }; const load = (k, def)=>{ try{ const v = localStorage.getItem(k); return v===null?def:JSON.parse(v); }catch{ return def; } };
+
+      // === LOGIC MỚI CHO CHUYỂN ĐỔI GIAO DIỆN ===
+      function applyTheme(theme) {
+        if (theme === 'dark') {
+          body.classList.add('dark-mode');
+          themeIcon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+          body.classList.remove('dark-mode');
+          themeIcon.classList.replace('fa-sun', 'fa-moon');
+        }
+      }
+
+      themeToggleBtn.addEventListener('click', () => {
+        const newTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
+        applyTheme(newTheme);
+        save('theme', newTheme);
+      });
+
+      // === KHỞI TẠO TRẠNG THÁI BAN ĐẦU ===
+      // Tải cài đặt trình phát
       audio.volume = load('vol', 0.8); audio.muted  = load('muted', false); shuffle = load('shuffle', false); const plopen = load('plopen', false);
       volRange.value = Math.round(audio.volume*100); updateVolUI();
       shuffleBtn.classList.toggle('btn-toggle-active', shuffle); shuffleBtn.setAttribute('aria-pressed', String(shuffle));
       if (plopen){ playerContainer.classList.add('playlist-visible'); playlistBtn.classList.add('btn-toggle-active'); playlistBtn.setAttribute('aria-pressed','true'); playlistBtn.setAttribute('aria-expanded','true'); }
+
+      // Tải và áp dụng cài đặt giao diện
+      const savedTheme = load('theme', null);
+      if (savedTheme) {
+        applyTheme(savedTheme);
+      } else {
+        // Nếu không có gì được lưu, dùng cài đặt của hệ thống làm mặc định
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          applyTheme('dark');
+        } else {
+          applyTheme('light');
+        }
+      }
+
+      // Dọn dẹp
       window.addEventListener('beforeunload', ()=>{ for (const u of objectUrls){ try{ URL.revokeObjectURL(u); }catch{} } });
     });
   </script>
